@@ -5,4 +5,5 @@ FactoryBot.define do
     status { Faker::Number.between(from: 0, to: 1)  }
     frequency { "monthly" }
     association :customer
+  end
 end
