@@ -10,7 +10,7 @@ RSpec.describe 'Customer Tea Subscription Request', type: :request do
       post "/api/v1/customers/#{@customer.id}/subscriptions",
       params: { title: "Summer Pack",
                 price: 12.99,
-                frequency: "monthly" }
+                frequency: "monthly", }
 
       subscription = JSON.parse(response.body, symbolize_names: true)
       expect(response).to be_successful
