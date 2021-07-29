@@ -28,4 +28,28 @@ RSpec.describe 'Customer Tea Subscription Index', type: :request do
       expect(index).to have_key(:frequency)
     end
   end
+
+  describe 'sad path' do
+    it "shows a zero 0 if tea subscriptions" do
+      customer = create :customer
+
+      get "/api/v1/customers/#{customer.id}/subscriptions"
+      subscription = JSON.parse(response.body, symbolize_names: true)
+      attributes = subscription[:data][:attributes]
+      index = subscription[:included].first[:attributes]
+
+      expect(response).to be_successful
+      expect(subscription).to be_a Hash
+      expect(subscription[:included].count).to eq(0)
+    end
+    it "shows an error if tea subscriptions doesnt exist" do
+      get "/api/v1/customers/#{@customer.id}/subscriptions/100"
+      subscription = JSON.parse(response.body, symbolize_names: true)
+      attributes = subscription[:data][:attributes]
+      index = subscription[:included].first[:attributes]
+
+      expect(response).to_not be_successful
+      expect(subscription).to be_a Hash
+    end
+  end
 end
