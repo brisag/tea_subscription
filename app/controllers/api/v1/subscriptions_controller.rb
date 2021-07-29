@@ -2,6 +2,14 @@ class Api::V1::SubscriptionsController < ApplicationController
   before_action :set_customer
   before_action :set_subscription, only: %i[show update]
 
+  def index
+    render json: CustomerSerializer.new(@customer, include: [:subscriptions])
+  end
+
+  def show
+    render json: SubscriptionSerializer.new(@subscription)
+  end
+
   def create
     subscription = Subscription.new(subscription_params)
     if subscription.save
