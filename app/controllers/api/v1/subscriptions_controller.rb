@@ -22,9 +22,7 @@ class Api::V1::SubscriptionsController < ApplicationController
   def update
     @subscription.update!(update_subscription_params)
     if @subscription.save
-      render json: SubscriptionSerializer.new(@subscription), status: :created
-    else
-      render json: { errors: @subscription.errors.full_messages }, status: :bad_request
+      render json: SubscriptionSerializer.new(@subscription), status: 201
     end
   end
 
